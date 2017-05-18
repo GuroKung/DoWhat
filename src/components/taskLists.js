@@ -49,7 +49,17 @@ class TaskLists extends Component {
 
     clearTask() {
         this._textInput.setNativeProps({text: ''});
-        // this.setState({ newTask: "" });
+    }
+
+
+    _pressRow(rowID) {
+        // let tasks = this.state.dataSource._dataBlob.s1;
+        // tasks[rowID] 
+        // this.setState({
+        //     dataSource: this.state.dataSource.cloneWithRows(
+        //         this._genRows(this._pressData)
+        //     )
+        // });
     }
     
     _renderRow(rowData, sectionID, rowID, highlightRow) {
@@ -60,7 +70,6 @@ class TaskLists extends Component {
             }}>
                 <View>
                     <View style={styles.row}>
-
                         <Text style={styles.text}>
                             {rowData.label}
                         </Text>
@@ -88,7 +97,7 @@ class TaskLists extends Component {
                 <View style={{ marginTop: 20, flexDirection: 'column', justifyContent: 'center' }}>
                     <ListView
                         dataSource={this.state.dataSource}
-                        renderRow={this._renderRow}
+                        renderRow={this._renderRow.bind(this)}
                         renderSeparator={this._renderSeparator}
                         enableEmptySections={true}
                     />

@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Button } from 'react-native';
 
 import moment from 'moment';
 import firebase from '../firebaseService';
 import TaskLists from './taskLists';
 
 class MainPage extends Component {
-    static navigationOptions = {
-        title: 'Do What'
+    static navigationOptions = ({ navigation }) => {
+        const { navigate } = navigation;
+        return {
+            title: 'Do What',
+            headerLeft: (
+                <Button
+                    title="Menu"
+                    onPress={() => navigate('Menu') }
+                />
+            )
+        };
     };
 
     constructor(props){
