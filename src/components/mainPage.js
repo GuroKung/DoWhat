@@ -10,6 +10,7 @@ class MainPage extends Component {
         const { navigate } = navigation;
         return {
             title: 'Do What',
+            headerBackTitle: 'Task Lists',
             headerLeft: (
                 <Button
                     title="Menu"
