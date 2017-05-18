@@ -6,17 +6,35 @@ import firebase from '../firebaseService';
 import TaskLists from './taskLists';
 
 class Project extends Component {
+    static navigationOptions = ({ navigation }) => {
+        const { navigate } = navigation;
+        return {
+            title: 'Do What',
+            headerBackTitle: navigation.state.params.project.name,
+            headerLeft: (
+                <Button
+                    title="Menu"
+                    onPress={() => navigate('Menu') }
+                />
+            )
+        };
+    };
+
     constructor(props){
         super(props);
 
+        const { params } =  props.navigation.state;
+        let currentProject = params.project;
         let curentUser = firebase.auth().currentUser;   
         let taskUrl = 'users/' + curentUser.uid + '/project/' + props.projectId;
-        this.state = { taskUrl };
+        this.state = { taskUrl, currentProject };
     }
     render() {
         return (
-            <View>
-                <Text>Project</Text>
+            <View style={{ flex: 1}}>
+                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
+                    <Text style={{ fontSize: 22 }}>{this.state.currentProject.name}</Text>
+                </View>
                 <TaskLists taskUrl={this.state.taskUrl}/>
             </View>
         );

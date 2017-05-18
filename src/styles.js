@@ -30,5 +30,8 @@ module.exports = StyleSheet.create({
   btnFont: {
     color: 'white',
     fontSize: 20
+  },
+  headerFont: {
+    fontSize: 20
   }
 });
