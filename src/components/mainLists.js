@@ -53,8 +53,10 @@ class MainLists extends Component {
     getAllTasks(projects) {
         let tasks = [];
         for (let i = 0; i < projects.length; i++) {
-            for (let j = 0; j < projects[i].tasks.length; j++) {
+            if(projects[i].tasks) {
+                for (let j = 0; j < projects[i].tasks.length; j++) {
                 tasks.push(projects[i].tasks[j]);
+                }
             }
         }
         return tasks;

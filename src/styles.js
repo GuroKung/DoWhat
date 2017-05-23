@@ -35,7 +35,13 @@ module.exports = StyleSheet.create({
   headerFont: {
     fontSize: 20
   },
-  greenBtn: {
-    color: "#FFFFFF"
+  taskContainer: {
+       marginTop: 12, 
+       justifyContent: 'flex-start'
+  },
+  textInputContainer: { 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'center'
   }
 });

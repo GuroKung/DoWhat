@@ -55,9 +55,7 @@ class Login extends Component {
                     style={{ height: 40 }}
                     placeholder="Input email"
                     onChangeText={(email) => {
-                        console.log('On Text Change email:', email);
                         this.setState({email})
-                        console.log('current state', this.state.email);
                     }}
                     autoCapitalize="none"
                 />
