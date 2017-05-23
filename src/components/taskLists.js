@@ -23,8 +23,10 @@ class TaskLists extends Component {
                 // throw error;
             });
 
-        this.state = { dataSource: ds.cloneWithRows(tasks) };
         this.clearTask = this.clearTask.bind(this);
+        this._renderRow = this._renderRow.bind(this);
+
+        this.state = { dataSource: ds.cloneWithRows(tasks) };
     }
 
     async createNewTask() {
@@ -50,23 +52,11 @@ class TaskLists extends Component {
     clearTask() {
         this._textInput.setNativeProps({text: ''});
     }
-
-
-    _pressRow(rowID) {
-        // let tasks = this.state.dataSource._dataBlob.s1;
-        // tasks[rowID] 
-        // this.setState({
-        //     dataSource: this.state.dataSource.cloneWithRows(
-        //         this._genRows(this._pressData)
-        //     )
-        // });
-    }
     
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableHighlight onPress={() => {
-                this._pressRow(rowID);
-                highlightRow(sectionID, rowID);
+                this.props.navigation.navigate('Task', rowData)
             }}>
                 <View>
                     <View style={styles.row}>
@@ -97,19 +87,19 @@ class TaskLists extends Component {
                 <View style={{ marginTop: 20, flexDirection: 'column', justifyContent: 'center' }}>
                     <ListView
                         dataSource={this.state.dataSource}
-                        renderRow={this._renderRow.bind(this)}
+                        renderRow={this._renderRow}
                         renderSeparator={this._renderSeparator}
                         enableEmptySections={true}
                     />
                 </View>
-                <View style={{ marginTop: 12, paddingLeft: 35, paddingRight: 35, justifyContent: 'flex-start' }}>
+                <View style={styles.taskContainer}>
                     <TextInput
                         style={{ padding: 10, height: 80, backgroundColor: '#F6F6F6'}}
                         ref={component => this._textInput = component}
                         placeholder="Create New Task"
                         onChangeText={(newTask) => this.setState({ newTask })}
                     />
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 12 }}>
+                    <View style={styles.textInputContainer}>
                         <GreenButton title="Add" press={() => this.createNewTask()} />
                         <Button
                             title="Clear"
@@ -142,6 +132,15 @@ var styles = StyleSheet.create({
   },
   textBox: {
       backgroundColor: '#F6F6F6'
+  },
+  taskContainer: {
+       marginTop: 12, 
+       justifyContent: 'flex-start'
+  },
+  textInputContainer: { 
+      flexDirection: 'row', 
+      alignItems: 'center', 
+      justifyContent: 'center'
   }
 });
 

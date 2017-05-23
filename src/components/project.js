@@ -35,7 +35,7 @@ class Project extends Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
                     <Text style={{ fontSize: 22 }}>{this.state.currentProject.name}</Text>
                 </View>
-                <TaskLists taskUrl={this.state.taskUrl}/>
+                <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation}/>
             </View>
         );
     }

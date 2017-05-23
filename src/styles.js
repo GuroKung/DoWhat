@@ -25,7 +25,8 @@ module.exports = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10,
     paddingLeft: 20,
-    paddingRight: 20
+    paddingRight: 20,
+    marginTop: 12 
   },
   btnFont: {
     color: 'white',
@@ -33,5 +34,8 @@ module.exports = StyleSheet.create({
   },
   headerFont: {
     fontSize: 20
+  },
+  greenBtn: {
+    color: "#FFFFFF"
   }
 });

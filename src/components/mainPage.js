@@ -29,7 +29,6 @@ class MainPage extends Component {
     }
 
     render() {
-       
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
@@ -38,7 +37,7 @@ class MainPage extends Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -15 }}>
                     <Text>{this.state.currentDate.toString()}</Text>
                 </View>
-                <TaskLists taskUrl={this.state.taskUrl}/>
+                <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation}/>
             </View>
         );
     }
