@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 
 import moment from 'moment';
 import firebase from '../firebaseService';
-import TaskLists from './taskLists';
+import MainLists from './mainLists';
 
 class MainPage extends Component {
     static navigationOptions = ({ navigation }) => {
@@ -25,9 +25,8 @@ class MainPage extends Component {
         let currentDate = moment().format("MMM Do YY");
         let curentUser = firebase.auth().currentUser;   
 
-        this.state = { currentDate, curentUser, taskUrl: 'users/' + curentUser.uid + '/tasks' };
+        this.state = { currentDate, curentUser };
     }
-
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
@@ -37,7 +36,7 @@ class MainPage extends Component {
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: -15 }}>
                     <Text>{this.state.currentDate.toString()}</Text>
                 </View>
-                <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation}/>
+                <MainLists navigation={this.props.navigation}/>
             </View>
         );
     }

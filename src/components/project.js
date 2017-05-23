@@ -26,7 +26,8 @@ class Project extends Component {
         const { params } =  props.navigation.state;
         let currentProject = params.project;
         let curentUser = firebase.auth().currentUser;   
-        let taskUrl = 'users/' + curentUser.uid + '/project/' + props.projectId;
+        let projectId = params.projectId;
+        let taskUrl = 'users/' + curentUser.uid + '/projects/' + projectId + '/tasks';
         this.state = { taskUrl, currentProject };
     }
     render() {

@@ -5,17 +5,18 @@ import firebase from '../firebaseService';
 
 import GreenButton from './greenBtn';
 
-class TaskLists extends Component {
+class MainLists extends Component {
     constructor(props){
         super(props);
 
+        let curentUser = firebase.auth().currentUser;   
         let tasks = [{label: 'Now Loading..'}];
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 
-        firebase.database().ref(props.taskUrl).once('value')
+        firebase.database().ref('users/' + curentUser.uid + '/projects').once('value')
             .then((snapshot) => {
                 if (!snapshot) this.setState({ dataSource: ds.cloneWithRows([]) });
-                else this.setState({ dataSource: ds.cloneWithRows(snapshot.val()) });
+                else this.setState({ dataSource: ds.cloneWithRows(this.getAllTasks(snapshot.val())) });
             })
             .catch((error) => {
                 console.log('ERROR: ' + error.message);
@@ -33,23 +34,30 @@ class TaskLists extends Component {
         if (this.state.newTask) {
             try {
                 let tasks = this.state.dataSource._dataBlob.s1;
-                let key = firebase.database().ref().child('tasks').push().key;
                 console.log('TASKS', tasks);
 
                 if(!tasks) tasks = [];
 
                 tasks.push({
-                    id: key,
                     label: this.state.newTask
                 });
 
                 await firebase.database().ref(this.props.taskUrl).set(tasks);
-                this.clearTask();
                 this.setState({ dataSource: this.state.dataSource.cloneWithRows(tasks) });
             } catch (error) {
                 console.log(error.toString());
             }
         }
+    }
+
+    getAllTasks(projects) {
+        let tasks = [];
+        for (let i = 0; i < projects.length; i++) {
+            for (let j = 0; j < projects[i].tasks.length; j++) {
+                tasks.push(projects[i].tasks[j]);
+            }
+        }
+        return tasks;
     }
 
     clearTask() {
@@ -85,7 +93,6 @@ class TaskLists extends Component {
   }
 
     render() {
-        console.log('THIS STATE', this.state);
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <View style={{ marginTop: 20, flexDirection: 'column', justifyContent: 'center' }}>
@@ -96,7 +103,7 @@ class TaskLists extends Component {
                         enableEmptySections={true}
                     />
                 </View>
-                <View style={styles.taskContainer}>
+                {/*<View style={styles.taskContainer}>
                     <TextInput
                         style={{ padding: 10, height: 80, backgroundColor: '#F6F6F6'}}
                         ref={component => this._textInput = component}
@@ -111,7 +118,7 @@ class TaskLists extends Component {
                             accessibilityLabel="Clear"
                             onPress={this.clearTask} />
                     </View>
-                </View>
+                </View>*/}
             </View>            
         );
     }
@@ -148,4 +155,4 @@ var styles = StyleSheet.create({
   }
 });
 
-export default TaskLists;
+export default MainLists;
