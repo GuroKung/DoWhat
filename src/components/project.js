@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
+import { MessageBar as MessageBarAlert , MessageBarManager } from 'react-native-message-bar';
 
 import moment from 'moment';
 import firebase from '../firebaseService';
@@ -30,7 +31,28 @@ class Project extends Component {
         let taskUrl = 'users/' + curentUser.uid + '/projects/' + projectId + '/tasks';
         this.state = { taskUrl, currentProject };
     }
-    
+
+    componentDidMount() {
+        MessageBarManager.registerMessageBar(this.refs.alert);
+    }
+
+    componentWillUnmount() {
+        MessageBarManager.unregisterMessageBar();
+    }
+
+    alertCreateTaskSuccess () {
+        MessageBarManager.showAlert({
+            title: 'Success',
+            message: 'Task created',
+            alertType: 'success',
+            animationType: 'SlideFromLeft',
+            stylesheetSuccess: {
+                backgroundColor: '#6fcf97',
+                strokeColor: '#6fcf97'
+            }
+        });
+    }
+
     render() {
         if (this.state.currentProject.tasks) {
             var remainingTasks = `${this.state.currentProject.tasks.length} remains`;
@@ -44,7 +66,8 @@ class Project extends Component {
                 <View style={styles.projectSub}>
                     <Text>{remainingTasks}</Text>
                 </View>
-                <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation}/>
+                <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation} alertCreateTaskSuccess={this.alertCreateTaskSuccess}/>
+                <MessageBarAlert ref="alert" />
             </View>
         );
     }

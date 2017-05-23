@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, TextInput, View, Button, Alert } from 'react-native';
 import styles from '../styles';
 import firebase from '../firebaseService';
+import { MessageBar as MessageBarAlert , MessageBarManager } from 'react-native-message-bar';
 
 import GreenButton from './greenBtn';
 import MainPage from './mainPage';
@@ -20,18 +21,30 @@ class Login extends Component {
          this.signup = this.signup.bind(this);
     }
     async signup(navigate) {
-            console.log('Call Signup', this.state);
         try {
             await firebase.auth()
                 .createUserWithEmailAndPassword(this.state.email, this.state.password);
 
             console.log("Account created");
-
+            MessageBarManager.showAlert({
+                title: 'Success',
+                message: 'Account created',
+                alertType: 'success',
+                stylesheetSuccess: {
+                    backgroundColor: '#6fcf97',
+                    strokeColor: '#6fcf97'
+                }
+            });
             // Navigate to the Home page, the user is auto logged in
             navigate('MainPage');
 
         } catch (error) {
             console.log(error.toString())
+            MessageBarManager.showAlert({
+                title: 'Error',
+                message: error.toString(),
+                alertType: 'error'
+            });
         }
 
     }
@@ -43,8 +56,22 @@ class Login extends Component {
             navigate('MainPage');
         } catch(error) {
              console.log(error.toString());
+             MessageBarManager.showAlert({
+                 title: 'Error',
+                 message: error.toString(),
+                 alertType: 'error'
+             });
         }
     }
+
+    componentDidMount() {
+        MessageBarManager.registerMessageBar(this.refs.alert);
+    }
+
+    componentWillUnmount() {
+        MessageBarManager.unregisterMessageBar();
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         return (
@@ -73,6 +100,8 @@ class Login extends Component {
                 color="#841584"
                 accessibilityLabel="Ok, Great!"
                 onPress={() => this.signup(navigate)}/>
+
+                <MessageBarAlert ref="alert" />
             </View>
         );
     }

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, Button, ListView, StyleSheet, TouchableHighlight } from 'react-native';
-
 import firebase from '../firebaseService';
 
 import GreenButton from './greenBtn';
@@ -45,6 +44,7 @@ class TaskLists extends Component {
                 await firebase.database().ref(this.props.taskUrl).set(tasks);
                 this.clearTask();
                 this.setState({ dataSource: this.state.dataSource.cloneWithRows(tasks) });
+                this.props.alertCreateTaskSuccess();
             } catch (error) {
                 console.log(error.toString());
             }
