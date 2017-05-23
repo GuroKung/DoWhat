@@ -40,7 +40,6 @@ class Menu extends Component {
             try {
                 let projects = this.state.projects;
                 let key = firebase.database().ref().child('projects').push().key;
-                console.log('Projects', projects);
 
                 if (!projects) projects = [];
 

@@ -34,7 +34,6 @@ class MainLists extends Component {
         if (this.state.newTask) {
             try {
                 let tasks = this.state.dataSource._dataBlob.s1;
-                console.log('TASKS', tasks);
 
                 if(!tasks) tasks = [];
 

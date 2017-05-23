@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Text,View, Button } from 'react-native';
 
+import firebase from '../firebaseService';
+
 import GreenButton from './greenBtn';
 
 class Task extends Component {
@@ -8,11 +10,32 @@ class Task extends Component {
         super(props);
         const { params } =  props.navigation.state;
         let currentTask = params;
+        let taskId = params.rowID;
 
         this.state = { currentTask };
+        this.doneTask = this.doneTask.bind(this);
     }
-    removeTask(){
+    async doneTask(){
+        try {
 
+            let curentUser = firebase.auth().currentUser;
+            let projects = await firebase.database().ref('users/' + curentUser.uid + '/projects/').once('value');
+
+            projects.val().forEach((project, projectIndex) => {
+                if (project.tasks) {
+                    project.tasks.forEach(async (task, taskIndex) => {
+                        if (task.id == this.state.currentTask.id) {
+                            await firebase.database().ref(`users/${curentUser.uid}/projects/${projectIndex}/tasks/${taskIndex}`).remove();
+                            this.props.navigation.navigate('MainPage');
+                        }
+                    });
+                }
+            });
+        
+
+        } catch (error) {
+            console.error(error);
+        }
     }
     render() {
         return (
@@ -21,8 +44,7 @@ class Task extends Component {
                     <Text style={{ fontSize: 22 }}>{this.state.currentTask.label}</Text>
                 </View>
                 <View >
-                    {/*<GreenButton title="Move Task" onPress={}/>*/}
-                    <Button color="red" title="Remove Task" onPress={this.removeTask}/>
+                    <GreenButton title="Done" press={this.doneTask}/>
                 </View>
             </View>
         );

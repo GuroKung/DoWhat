@@ -34,7 +34,6 @@ class TaskLists extends Component {
             try {
                 let tasks = this.state.dataSource._dataBlob.s1;
                 let key = firebase.database().ref().child('tasks').push().key;
-                console.log('TASKS', tasks);
 
                 if(!tasks) tasks = [];
 
@@ -59,7 +58,7 @@ class TaskLists extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableHighlight onPress={() => {
-                this.props.navigation.navigate('Task', rowData)
+                this.props.navigation.navigate('Task', { rowData, sectionID, rowID })
             }}>
                 <View>
                     <View style={styles.row}>
@@ -85,7 +84,6 @@ class TaskLists extends Component {
   }
 
     render() {
-        console.log('THIS STATE', this.state);
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <View style={{ marginTop: 20, flexDirection: 'column', justifyContent: 'center' }}>
