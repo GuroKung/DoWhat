@@ -37,8 +37,8 @@ class Login extends Component {
     }
     async login(navigate){
         try {
-            // await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
-            await firebase.auth().signInWithEmailAndPassword('g@g.com', '12341234');
+            await firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
+            // await firebase.auth().signInWithEmailAndPassword('g@g.com', '12341234');
             console.log("Login Success");
             navigate('MainPage');
         } catch(error) {

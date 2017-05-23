@@ -35,6 +35,15 @@ class Menu extends Component {
         this.state = { projects, isPressedCreateProject: false };
     }
 
+    async logout(navigate){
+        try {
+            await firebase.auth().signOut();
+             navigate('Login');
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     async createNewProject() {
         if (this.state.newProject) {
             try {
@@ -103,6 +112,10 @@ class Menu extends Component {
                     <Button
                         title="Task Lists"
                         onPress={() => this.props.navigation.navigate('MainPage')}
+                    />
+                    <Button
+                        title="Logout"
+                        onPress={() => this.logout(navigate)}
                     />
                 </View>
                 <View style={{ flexDirection: 'column', justifyContent: 'space-between'}}>
