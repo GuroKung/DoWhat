@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 import moment from 'moment';
 import firebase from '../firebaseService';
@@ -30,16 +30,31 @@ class Project extends Component {
         let taskUrl = 'users/' + curentUser.uid + '/projects/' + projectId + '/tasks';
         this.state = { taskUrl, currentProject };
     }
+    
     render() {
+        if (this.state.currentProject.tasks) {
+            var remainingTasks = `${this.state.currentProject.tasks.length} remains`;
+        }
+
         return (
-            <View style={{ flex: 1}}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-                    <Text style={{ fontSize: 22 }}>{this.state.currentProject.name}</Text>
+            <View style={styles.container}>
+                <View style={styles.projectHeader}>
+                    <Text style={styles.textSize}>{this.state.currentProject.name}</Text>
+                </View>
+                <View style={styles.projectSub}>
+                    <Text>{remainingTasks}</Text>
                 </View>
                 <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation}/>
             </View>
         );
     }
 }
+
+var styles = StyleSheet.create({
+    container: { flex: 1 },
+    textSize: { fontSize: 22 },
+    projectHeader: { flexDirection: 'row', justifyContent: 'center', marginTop: 25 },
+    projectSub: { flexDirection: 'row', justifyContent: 'center', marginTop: 10 }
+});
 
 export default Project;

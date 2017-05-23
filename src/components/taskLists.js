@@ -58,7 +58,7 @@ class TaskLists extends Component {
     _renderRow(rowData, sectionID, rowID, highlightRow) {
         return (
             <TouchableHighlight onPress={() => {
-                this.props.navigation.navigate('Task', { rowData, sectionID, rowID })
+                this.props.navigation.navigate('Task', rowData )
             }}>
                 <View>
                     <View style={styles.row}>
@@ -115,7 +115,7 @@ class TaskLists extends Component {
     }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'center',

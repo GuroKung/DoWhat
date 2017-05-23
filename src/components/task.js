@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text,View, Button } from 'react-native';
+import { Text,View, Button, StyleSheet } from 'react-native';
 
 import firebase from '../firebaseService';
 
@@ -10,11 +10,11 @@ class Task extends Component {
         super(props);
         const { params } =  props.navigation.state;
         let currentTask = params;
-        let taskId = params.rowID;
 
         this.state = { currentTask };
         this.doneTask = this.doneTask.bind(this);
     }
+
     async doneTask(){
         try {
 
@@ -37,11 +37,12 @@ class Task extends Component {
             console.error(error);
         }
     }
+
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
-                <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-                    <Text style={{ fontSize: 22 }}>{this.state.currentTask.label}</Text>
+            <View style={styles.container}>
+                <View style={styles.taskName}>
+                    <Text style={styles.textSize}>{this.state.currentTask.label}</Text>
                 </View>
                 <View >
                     <GreenButton title="Done" press={this.doneTask}/>
@@ -50,5 +51,11 @@ class Task extends Component {
         );
     }
 }
+
+var styles = StyleSheet.create({
+    container: { flex: 1, flexDirection: 'column', justifyContent: 'flex-start' },
+    textSize: { fontSize: 22 },
+    taskName: { flexDirection: 'row', justifyContent: 'center', marginTop: 25 }
+});
 
 export default Task;
