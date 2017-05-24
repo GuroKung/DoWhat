@@ -43,7 +43,7 @@ class TaskLists extends Component {
 
                 await firebase.database().ref(this.props.taskUrl).set(tasks);
                 this.clearTask();
-                this.setState({ dataSource: this.state.dataSource.cloneWithRows(tasks) });
+                this.setState({ dataSource: this.state.dataSource.cloneWithRows(tasks), newTask: '' });
                 this.props.alertCreateTaskSuccess();
             } catch (error) {
                 console.log(error.toString());
@@ -86,7 +86,7 @@ class TaskLists extends Component {
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
-                <View style={{ marginTop: 20, flexDirection: 'column', justifyContent: 'center' }}>
+                <View style={styles.taskListsContainer}>
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={this._renderRow}
@@ -94,14 +94,14 @@ class TaskLists extends Component {
                         enableEmptySections={true}
                     />
                 </View>
-                <View style={styles.taskContainer}>
+                <View style={styles.textInputContainer}>
                     <TextInput
                         style={{ padding: 10, height: 80, backgroundColor: '#F6F6F6'}}
                         ref={component => this._textInput = component}
                         placeholder="Create New Task"
                         onChangeText={(newTask) => this.setState({ newTask })}
                     />
-                    <View style={styles.textInputContainer}>
+                    <View style={styles.textInputButtonContainer}>
                         <GreenButton title="Add" press={() => this.createNewTask()} />
                         <Button
                             title="Clear"
@@ -135,14 +135,20 @@ let styles = StyleSheet.create({
   textBox: {
       backgroundColor: '#F6F6F6'
   },
-  taskContainer: {
+  textInputContainer: {
        marginTop: 12, 
        justifyContent: 'flex-start'
   },
-  textInputContainer: { 
+  textInputButtonContainer: { 
       flexDirection: 'row', 
       alignItems: 'center', 
       justifyContent: 'center'
+  },
+  taskListsContainer: {
+      marginTop: 20,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      maxHeight: 165
   }
 });
 
