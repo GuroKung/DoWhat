@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, AlertIOS } from 'react-native';
 import { MessageBar as MessageBarAlert , MessageBarManager } from 'react-native-message-bar';
 
 import moment from 'moment';
@@ -53,15 +53,25 @@ class Project extends Component {
         });
     }
 
-    async archiveProject(projectId, navigate) {
-        try {
-            let curentUser = firebase.auth().currentUser;
-            await firebase.database().ref(`users/${curentUser.uid}/projects/${projectId}`).remove();
-            navigate('MainPage');
-        } catch (error) {
-            console.log(error.toString());
-        }
-
+    archiveProject(projectId, navigate) {
+        AlertIOS.alert(
+            'Comfirm Archive Project',
+            'Are you sure want to archive this project ? It will be gone forever.',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                {
+                    text: 'Archive', onPress: async () => {
+                        try {
+                            let curentUser = firebase.auth().currentUser;
+                            await firebase.database().ref(`users/${curentUser.uid}/projects/${projectId}`).remove();
+                            navigate('MainPage');
+                        } catch (error) {
+                            console.log(error.toString());
+                        }
+                    }
+                }
+            ]
+        );
     }
 
     render() {
