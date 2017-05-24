@@ -22,11 +22,15 @@ class MainPage extends Component {
 
     constructor(props){
         super(props);
-        let currentDate = moment().format("MMM Do YY");
+        let currentDate = moment().format("LLL");
         let curentUser = firebase.auth().currentUser;   
 
         this.state = { currentDate, curentUser };
+        setInterval(() => {
+            this.setState({ currentDate: moment().format("LLL") });
+        }, 1000);
     }
+
     render() {
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>

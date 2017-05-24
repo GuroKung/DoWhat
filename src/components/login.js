@@ -75,8 +75,8 @@ class Login extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={{ flex: 1 , justifyContent: "center", padding: 50, alignItems: 'stretch'}}>
-                <Text style={{ marginBottom: 15,  fontSize: 50, alignItems: 'center' }}> Do What </Text>
+            <View style={{ flex: 1 , justifyContent: "space-between", padding: 50, marginTop: 50 ,marginBottom: 50 ,  alignItems: 'stretch'}}>
+                <Text style={{ marginBottom: 35,  fontSize: 50, alignItems: 'center' }}> Do What </Text>
                 <Text>Email:</Text>
                 <TextInput
                     style={{ height: 40 }}

@@ -105,22 +105,6 @@ class MainLists extends Component {
                         enableEmptySections={true}
                     />
                 </View>
-                {/*<View style={styles.taskContainer}>
-                    <TextInput
-                        style={{ padding: 10, height: 80, backgroundColor: '#F6F6F6'}}
-                        ref={component => this._textInput = component}
-                        placeholder="Create New Task"
-                        onChangeText={(newTask) => this.setState({ newTask })}
-                    />
-                    <View style={styles.textInputContainer}>
-                        <GreenButton title="Add" press={() => this.createNewTask()} />
-                        <Button
-                            title="Clear"
-                            color="#000000"
-                            accessibilityLabel="Clear"
-                            onPress={this.clearTask} />
-                    </View>
-                </View>*/}
             </View>            
         );
     }
