@@ -51,9 +51,8 @@ class MainLists extends Component {
 
     getAllTasks(projects) {
         let tasks = [];
-        console.log("get all tasks from ", projects);
         for (let i = 0; i < projects.length; i++) {
-            if(projects[i].tasks) {
+            if(projects[i] && projects[i].tasks) {
                 for (let j = 0; j < projects[i].tasks.length; j++) {
                     if(projects[i].tasks[j]) tasks.push(projects[i].tasks[j]);
                 }
