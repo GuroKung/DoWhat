@@ -59,7 +59,7 @@ class Menu extends Component {
                 });
 
                 await firebase.database().ref(this.projectsUrl).set(projects);
-                this.setState({ projects, isPressedCreateProject: false });
+                this.setState({ projects, isPressedCreateProject: false, newProject: '' });
             } catch (error) {
                 console.log(error.toString());
             }
