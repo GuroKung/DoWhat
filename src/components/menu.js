@@ -93,13 +93,15 @@ class Menu extends Component {
         let createNewProjectInput = this.onPressedCreateProject();
         if (this.state.projects) {
             projects = this.state.projects.map((project, index) => {
-                return (
-                    <View key={index} style={{ borderStyle: 'solid'}}>
-                        <Button 
-                            title={project.name}
-                            onPress={() => navigate('Project', { projectId: index, project })}/>
-                    </View>
-                )
+                if (project) { // firebase will be automatically add null for the lost seq number index
+                    return (
+                        <View key={index} style={{ borderStyle: 'solid' }}>
+                            <Button
+                                title={project.name}
+                                onPress={() => navigate('Project', { projectId: index, project })} />
+                        </View>
+                    )
+                }
             });
         }
         

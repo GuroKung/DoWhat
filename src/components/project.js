@@ -29,7 +29,7 @@ class Project extends Component {
         let curentUser = firebase.auth().currentUser;   
         let projectId = params.projectId;
         let taskUrl = 'users/' + curentUser.uid + '/projects/' + projectId + '/tasks';
-        this.state = { taskUrl, currentProject };
+        this.state = { taskUrl, currentProject, projectId };
     }
 
     componentDidMount() {
@@ -53,7 +53,20 @@ class Project extends Component {
         });
     }
 
+    async archiveProject(projectId, navigate) {
+        try {
+            let curentUser = firebase.auth().currentUser;
+            await firebase.database().ref(`users/${curentUser.uid}/projects/${projectId}`).remove();
+            navigate('MainPage');
+        } catch (error) {
+            console.log(error.toString());
+        }
+
+    }
+
     render() {
+        const { navigate } = this.props.navigation;
+
         if (this.state.currentProject.tasks) {
             var remainingTasks = `${this.state.currentProject.tasks.length} remains`;
         }
@@ -65,6 +78,9 @@ class Project extends Component {
                 </View>
                 <View style={styles.projectSub}>
                     <Text>{remainingTasks}</Text>
+                </View>
+                <View style={styles.projectSub}>
+                    <Button title="Archive Project" onPress={() => this.archiveProject(this.state.projectId, navigate)} color='red'/>
                 </View>
                 <TaskLists taskUrl={this.state.taskUrl} navigation={this.props.navigation} alertCreateTaskSuccess={this.alertCreateTaskSuccess}/>
                 <MessageBarAlert ref="alert" />
