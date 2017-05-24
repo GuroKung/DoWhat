@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, ScrollView } from 'react-native';
 
 import styles from '../styles';
 import firebase from '../firebaseService';
@@ -108,9 +108,6 @@ class Menu extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 25 }}>
-                    <Text style={{ fontSize: 22 }}>Projects</Text>
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
                     <Button
                         title="Task Lists"
                         onPress={() => this.props.navigation.navigate('MainPage')}
@@ -120,11 +117,16 @@ class Menu extends Component {
                         onPress={() => this.logout(navigate)}
                     />
                 </View>
-                <View style={{ flexDirection: 'column', justifyContent: 'space-between'}}>
-                    {projects}
+                <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
+                    <Text style={{ fontSize: 22 }}>Projects</Text>
                 </View>
-                <Button title="+ New Project" onPress={() => this.setState({ isPressedCreateProject: true })}/>
-                {createNewProjectInput}
+                <ScrollView style={styles.scrollView}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
+                        {projects}
+                    </View>
+                    <Button title="+ New Project" onPress={() => this.setState({ isPressedCreateProject: true })} />
+                    {createNewProjectInput}
+                </ScrollView>
             </View>
         );
     }

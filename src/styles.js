@@ -43,5 +43,10 @@ module.exports = StyleSheet.create({
       flexDirection: 'row', 
       alignItems: 'center', 
       justifyContent: 'center'
+  },
+  scrollView: {
+    // backgroundColor: '#eeeeee',
+    height: 300,
+    flex: 1
   }
 });
